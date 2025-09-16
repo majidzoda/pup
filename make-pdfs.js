@@ -8,7 +8,13 @@ const puppeteer = require('puppeteer');
   if (!fs.existsSync(outDir)) fs.mkdirSync(outDir);
   const urls = fs.readFileSync('urls.txt','utf8').split(/\r?\n/).filter(Boolean);
 
-  const browser = await puppeteer.launch({args: ['--no-sandbox']});
+  const browser = await puppeteer.launch({
+  headless: false, // must be false to use real profile
+  args: [
+    `--user-data-dir=C:\\Users\\JohnDoe\\AppData\\Local\\Google\\Chrome\\User Data`,
+    '--profile-directory=Default' // or 'Profile 1' etc.
+  ],
+});
   const page = await browser.newPage();
 
   for (let i = 0; i < urls.length; i++) {
